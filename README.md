@@ -78,21 +78,21 @@ For full details, syntax, and examples, see: `specs/parsing-rules.md`.
 
 
 ## Repository Structure
-
+```
 /
-README.md
-GOVERNANCE.md
-/specs
-hdoc.md
-embedded-hdoc.md
-cdoc.md
-condoc.md
-static-comments.md
-parsing-rules.md
-...
-/drafts
-design-notes.md
-examples/
+   README.md
+   GOVERNANCE.md
+   /specs
+      hdoc.md
+      embedded-hdoc.md
+      cdoc.md
+      condoc.md
+      static-comments.md
+      parsing-rules.md
+      ...
+   /drafts
+      design-notes.md
+```
 
 - **specs/** — finalized or semi-finalized specs (once they exist).  
 - **drafts/** — rough notes, sketches, early proposals.
