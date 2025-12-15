@@ -34,6 +34,7 @@ A CONDOC has the following structure:
 ```xml
 <condoc>
   <title>…</title>            <!-- optional -->
+  <fallback>…</fallback>       <!-- optional -->
   <description>…</description> <!-- optional -->
   <main>…</main>              <!-- required -->
   <connections>…</connections> <!-- optional -->
@@ -59,7 +60,19 @@ Example:
 
 ---
 
-## 2.2 `<description>` (optional)
+
+# 2.2. Fallback
+
+The `<fallback>` section is intended to contain HTML content shown to users who do not have compatible software to properly view the document.
+
+Typically, this section includes a message explaining that special software (such as a browser extension or dedicated client) is required to view the document correctly, often with one or more hyperlinks. For this reason, raw HTML is allowed inside the `<fallback>` tags.
+
+During parsing by a compliant client, the `<fallback>` element MUST be removed entirely before the document is processed as XML.
+
+---
+
+
+## 2.3 `<description>` (optional)
 
 A brief explanation of what the CONDOC does, why it exists, or what enhancements it contains. Can contain plain text only. HTML is not allowed.
 
@@ -73,7 +86,7 @@ The Project Gutenberg eBook with table of contents added as a separate document.
 
 ---
 
-## 2.3 `<main>` (required)
+## 2.4 `<main>` (required)
 
 The URL of the **primary document** that this CONDOC enhances.
 
@@ -101,7 +114,7 @@ https://example.com/page.html#pr=c/body/r/.page
 
 ---
 
-## 2.4 `<connections>` (optional)
+## 2.5 `<connections>` (optional)
 
 The `<connections>` section contains:
 

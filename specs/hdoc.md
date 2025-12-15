@@ -53,12 +53,13 @@ The root element of every HDOC is:
 
 Children (in this order):
 
-1. `<metadata>` (required)
-2. `<header>` (optional, but recommended)
-3. `<content>` (required)
-4. `<panels>` (optional)
-5. `<copy-info>` (optional; required only for copies)
-6. `<connections>` (optional; defined in a separate specification)
+1. `<metadata>` (optional)
+2. `<header>` (optional)
+3. `<fallback>` (optional)
+4. `<content>` (required)
+5. `<panels>` (optional)
+6. `<copy-info>` (optional; required only for copies)
+7. `<connections>` (optional; defined in a separate specification)
 
 Any additional elements are **invalid**.
 
@@ -107,7 +108,17 @@ If the header is omitted, the title *may* appear inside `<content>`, but this is
 
 ---
 
-# 5. Content
+# 5. Fallback
+
+The `<fallback>` section is intended to contain HTML content shown to users who do not have compatible software to properly view the document.
+
+Typically, this section includes a message explaining that special software (such as a browser extension or dedicated client) is required to view the document correctly, often with one or more hyperlinks. For this reason, raw HTML is allowed inside the `<fallback>` tags.
+
+During parsing by a compliant client, the `<fallback>` element MUST be removed entirely before the document is processed as XML.
+
+---
+
+# 6. Content
 
 The `<content>` element contains the **HTML** or plain text content of the document.
 
@@ -138,7 +149,7 @@ Clients must extract the HTML block from `<content>` using a **regular expressio
 
 ---
 
-# 6. Panels
+# 7. Panels
 
 The `<panels>` section defines standardized UI panels that appear in all clients.
 It may contain three types of panels: `<top>`, `<side>`, and `<bottom>`.
@@ -155,13 +166,13 @@ All panels are **optional**.
 
 ---
 
-## 6.1 `<top>` Panel
+## 7.1 `<top>` Panel
 
 Contains branding and navigation links.
 
 Allowed child elements:
 
-### 6.1.1 `<site-name>`
+### 7.1.1 `<site-name>`
 
 ```xml
 <site-name href="https://example.com">My Site</site-name>
@@ -169,7 +180,7 @@ Allowed child elements:
 
 * Either `<site-name>` **or** `<logo>` may be used (not both).
 
-### 6.1.2 `<logo>`
+### 7.1.2 `<logo>`
 
 ```xml
 <logo src="https://example.com/logo.png" href="https://example.com"/>
@@ -180,7 +191,7 @@ Attributes:
 * `src` (required) — image URL
 * `href` (optional)
 
-### 6.1.3 `<a>`
+### 7.1.3 `<a>`
 
 ```xml
 <a href="https://example.com/about">About</a>
@@ -190,7 +201,7 @@ Multiple allowed.
 
 ---
 
-## 6.2 `<side>` Panel
+## 7.2 `<side>` Panel
 
 Contains comments or an interactive page.
 
@@ -204,7 +215,7 @@ Attributes:
 
 ### Child elements:
 
-#### 6.2.1 `<comments>`
+#### 7.2.1 `<comments>`
 
 ```xml
 <comments title="Comments" empty="No comments yet">https://…/comments.json</comments>
@@ -219,7 +230,7 @@ Content:
 
 * URL of a static-comments JSON array
 
-#### 6.2.2 `<ipage>`
+#### 7.2.2 `<ipage>`
 
 URL of an interactive HTML page displayed in the side panel.
 
@@ -229,7 +240,7 @@ URL of an interactive HTML page displayed in the side panel.
 
 ---
 
-## 6.3 `<bottom>` Panel
+## 7.3 `<bottom>` Panel
 
 ```xml
 <bottom>
@@ -242,7 +253,7 @@ URL of an interactive HTML page displayed in the side panel.
 
 Child elements:
 
-### 6.3.1 `<section>`
+### 7.3.1 `<section>`
 
 Attributes:
 
@@ -250,13 +261,13 @@ Attributes:
 
 Contains multiple `<a>` elements.
 
-### 6.3.2 `<bottom-message>`
+### 7.3.2 `<bottom-message>`
 
 Contains plain text.
 
 ---
 
-# 7. Copy Info
+# 8. Copy Info
 
 `<copy-info>` is used only when the HDOC is a copy of another HDOC.
 In that case, this section becomes **required**.
@@ -270,7 +281,7 @@ In that case, this section becomes **required**.
 
 ---
 
-## 7.1 `<source>` (one or more)
+## 8.1 `<source>` (one or more)
 
 Attributes:
 
@@ -280,7 +291,7 @@ If copying a copy, include multiple `<source>` entries to preserve the history.
 
 ---
 
-## 7.2 `<media-mappings>` (optional)
+## 8.2 `<media-mappings>` (optional)
 
 Contains remapping rules for resource URLs.
 
@@ -295,7 +306,7 @@ Contains remapping rules for resource URLs.
 
 ---
 
-# 8. Connections
+# 9. Connections
 
 Connections are defined using the shared *Connections* format.
 They may appear in HDOC, CDOC, CONDOC documents.
@@ -308,32 +319,39 @@ Specification: `specs/connections.md` (not included here)
 
 ---
 
-# 9. Parsing Rules for HDOC Documents
+# 10. Parsing Rules for HDOC Documents
 
-HDOCs contain a mixture of:
+An HDOC document contains a mixture of:
+* XML — used for all structural elements
+* HTML — allowed only inside the `<content>` and `<fallback>` elements
 
-* XML (all structural elements)
-* HTML (inside `<content>` only)
+To prevent embedded HTML from interfering with XML parsing, compliant clients MUST process HDOC documents using the following steps, in order:
 
-To avoid HTML interfering with XML parsing, clients must:
+### Step 1: Remove `<fallback>` element (if present)
 
-### Step 1: Extract the HTML block from `<content>` using a regular expression
+The `<fallback>` element exists solely to provide alternative content for environments that do not support the HDOC format. It commonly contains raw HTML that may break XML parsing.
 
-Only `<content>` contains HTML; nowhere else.
+Before any XML parsing occurs, the `<fallback>` element and all of its contents MUST be removed entirely.
 
-### Step 2: Parse the remaining document as XML
+### Step 2: Strip HTML from `<h1>`
 
-After removing or isolating the HTML block.
+If the `<h1>` element contains HTML markup, all tags MUST be removed, and only the resulting plain text content MUST be preserved.
 
-### Step 3: Strip HTML from `<h1>`
+### Step 3: Extract the HTML block from `<content>`
 
-If `<h1>` contains HTML, remove the tags and keep only text.
+The `<content>` element typically contains raw HTML. This HTML MUST be extracted as a string (for example, using a regular expression or equivalent mechanism) and stored separately before XML parsing.
 
-These rules ensure consistent rendering in all client applications.
+### Step 4: Parse the remaining document as XML
+
+After the `<fallback>` element has been removed and the `<content>` HTML has been extracted, the remaining document MUST be parsed as XML.
+
+### Step 5: Sanitize the HTML found in `<content>`
+
+The HTML extracted from `<content>` MUST be sanitized according to the client’s security model before rendering.
 
 ---
 
-# 10. Future Additions
+# 11. Future Additions
 
 Future versions of HDOC may add:
 

@@ -29,6 +29,7 @@ A CDOC has the following top-level structure:
 ```xml
 <cdoc>
   <metadata>…</metadata>
+  <fallback>…</fallback>
   <svg>…</svg>
   <copy-info>…</copy-info>
   <connections>…</connections>
@@ -59,7 +60,17 @@ Example:
 
 ---
 
-# 2. `<svg>` Section
+# 2. Fallback
+
+The `<fallback>` section is intended to contain HTML content shown to users who do not have compatible software to properly view the document.
+
+Typically, this section includes a message explaining that special software (such as a browser extension or dedicated client) is required to view the document correctly, often with one or more hyperlinks. For this reason, raw HTML is allowed inside the `<fallback>` tags.
+
+During parsing by a compliant client, the `<fallback>` element MUST be removed entirely before the document is processed as XML.
+
+---
+
+# 3. `<svg>` Section
 
 All CDOC content is contained within a **single inline `<svg>` element**.
 
@@ -96,20 +107,6 @@ Example:
 
 ---
 
-
-# 3. Panels (Future Feature)
-
-Unlike HDOCs, CDOCs currently have **no panel system**.
-
-A future version of the specification may add optional fields for:
-
-* A side panel document
-* A panel UI URL
-* Overlays related to interactivity
-
-At present, **panels are not part of CDOC** and should not be included.
-
----
 
 # 4. `<copy-info>` Section
 
