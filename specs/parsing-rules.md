@@ -63,9 +63,7 @@ https://example.com/some-page#pr=c/body
 
 ---
 
-## 4. Special Parsing Modes
-
-### 4.1 Plain Text Pages
+## 4. Special Parsing Mode
 
 ```
 #pr=text
@@ -73,20 +71,6 @@ https://example.com/some-page#pr=c/body
 
 * Treat the entire page as plain text.
 * A line starting with `Title: ...` is used as the page title.
-
-### 4.2 WordPress Pages/Posts
-
-```
-#pr=wppage
-#pr=wppost
-```
-
-* Clients use the WordPress REST API to extract clean content.
-* Example API calls:
-
-  * Pages: `https://example.com/wp-json/wp/v2/pages?slug=some-page`
-  * Posts: `https://example.com/wp-json/wp/v2/posts?slug=some-post`
-* Used when the site exposes a public WordPress API.
 
 ---
 
