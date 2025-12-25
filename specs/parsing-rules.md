@@ -90,7 +90,7 @@ https://example.com/some-page#pr=c/body
 4. Select appropriate CSS selectors for content, title, date, author, and removal list.
 5. Encode selectors and append to the URL as `#pr=...`.
 
-* The **LZ Desktop Helper extension** can assist with encoding and testing.
+* The **Visible Connections browser extension** can assist with encoding and testing.
 
 ---
 
