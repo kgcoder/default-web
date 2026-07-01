@@ -53,6 +53,7 @@ Example:
 ```html
 <script type="application/json" id="hdoc-data">
 {
+  "lang": "en",
   "removal-selectors": ".some-class,.other-class",
   "header": {
     "h1": "The Title",
@@ -67,14 +68,16 @@ Example:
 
 #### Fields:
 
+* **lang** (optional): IETF language tag (e.g. `"en"`, `"ar"`) identifying the primary language of the document. Clients use this to set text direction (LTR/RTL) and other locale-sensitive rendering.
 * **removal-selectors** (optional): CSS selectors to remove unwanted elements from the content.
 * **header** (optional):
 
   * `h1`: Page title
   * `author`: Author name
   * `date`: Publication date
-* **panels** (optional): Defines top, side, and bottom panels for standardized UI (see HDOC panels spec).
+* **panels** (optional): Defines top, sidebar, side, and bottom panels for standardized UI (see HDOC panels spec).
 * **connections** (optional): Array of connection objects (see specification at `specs/connections.md`).
+* **republishing-policy** (optional): Republishing policy for the document. Allowed values: `"allow"` or `"do-not-republish"`. When present, the client inserts `<republishing-policy>{value}</republishing-policy>` inside the `<metadata>` block of the reconstructed HDOC XML. When absent, no tag is included (implicitly allowed). See the HDOC specification (section 3.2) for full semantics.
 
 ---
 
@@ -92,13 +95,46 @@ Example:
       { "href": "https://example.com/archive", "text": "Archive" }
     ]
   },
+  "post-nav": {
+    "prev": { "href": "https://example.com/older-post/", "title": "Older Post Title" },
+    "next": { "href": "https://example.com/newer-post/", "title": "Newer Post Title" }
+  },
+  "sidebar": {
+    "side": "right",
+    "items": [
+      {
+        "type": "search",
+        "action": "https://example.com/?s=%s",
+        "placeholder": "Search…",
+        "target": "_self"
+      },
+      {
+        "type": "links",
+        "title": "Popular Posts",
+        "items": [
+          { "href": "https://example.com/post-slug/", "text": "Post Title" },
+          { "href": "https://example.com/another/", "text": "Another Post", "target": "_blank", "rel": "noopener" }
+        ]
+      },
+      {
+        "type": "recent-comments",
+        "title": "Recent Comments",
+        "format": "{author} on {post}",
+        "comments": [
+          { "post-href": "https://example.com/post-slug/", "post-title": "Post Title", "author": "Jane", "excerpt": "Comment excerpt…" }
+        ]
+      }
+    ]
+  },
   "side": {
-    "side": "left",
     "ipage": "https://example.com/interactive-page",
     "comments": {
       "url": "http://example.com/json-comments/?post=19",
       "title": "Comments",
-      "empty": "No comments yet"
+      "empty": "No comments yet",
+      "leave-comment-url": "http://example.com/sw-comment-form/?post=19",
+      "reply-label": "Reply",
+      "leave-comment-label": "Leave a comment"
     }
   },
   "bottom": {
@@ -116,6 +152,28 @@ Example:
   }
 }
 ```
+
+**`post-nav` fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `post-nav.prev` | object | `{ href, title }` — omit if no previous post |
+| `post-nav.next` | object | `{ href, title }` — omit if no next post |
+
+**`sidebar` fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `sidebar.side` | string | `"left"` or `"right"` (default `"right"`) |
+| `sidebar.items[]` | array | Ordered list of sidebar widgets; multiple items of the same type are allowed |
+| `sidebar.items[].type` | string | `"search"`, `"links"`, or `"recent-comments"` |
+| `sidebar.items[].action` | string | *(type=search)* URL template; `%s` replaced with URL-encoded search term |
+| `sidebar.items[].placeholder` | string | *(type=search)* Optional input hint text |
+| `sidebar.items[].target` | string | *(type=search)* `"_self"` (default) or `"_blank"` |
+| `sidebar.items[].title` | string | *(type=links / recent-comments)* Optional section heading |
+| `sidebar.items[].items[]` | array | *(type=links)* Each: `{ href, text, target?, rel? }` |
+| `sidebar.items[].format` | string | *(type=recent-comments)* Template for each item; default `"{author} on {post}"`. Placeholders: `{author}`, `{post}` |
+| `sidebar.items[].comments[]` | array | *(type=recent-comments)* Each: `{ post-href, post-title, author, excerpt? }` |
 
 ---
 
@@ -154,4 +212,3 @@ Embedded HDOC connections follow the same structure as HDOC floating links:
 * `document.title` is used automatically if `header.h1` is not provided.
 * This format is **still a draft**; fields may be added in the future.
 * The Embedded HDOC format allows a website to **maintain a single URL** while making content available to both HTML and HDOC-aware software.
-

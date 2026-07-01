@@ -48,8 +48,12 @@ It may optionally reference:
 The root element of every HDOC is:
 
 ```xml
-<hdoc> … </hdoc>
+<hdoc lang="en"> … </hdoc>
 ```
+
+### `lang` attribute (optional)
+
+An IETF language tag (e.g. `"en"`, `"ar"`, `"he"`, `"fr"`) identifying the primary language of the document. Clients use this to set text direction (LTR/RTL) and may use it for font selection, hyphenation, and other locale-sensitive rendering. When absent, clients should fall back to their own default or detect language from context.
 
 Children (in this order):
 
@@ -81,7 +85,30 @@ The metadata section functions similarly to the `<head>` section in HTML.
 Contains the document’s title in plain text.
 Client software may display this in browser UI, tabs, link previews, etc.
 
-Other metadata fields are not yet defined.
+---
+
+## 3.2 `<republishing-policy>` (optional)
+
+Declares the author’s policy regarding republishing this document.
+
+**Republishing** means copying an existing HDOC or CDOC and hosting it at a new URL — typically to create a stable snapshot so that visible connections to that document never break due to the original being updated, moved or deleted.
+
+```xml
+<republishing-policy>allow</republishing-policy>
+```
+
+or
+
+```xml
+<republishing-policy>do-not-republish</republishing-policy>
+```
+
+Allowed values:
+
+* `allow` — the author explicitly permits republishing.
+* `do-not-republish` — the author explicitly prohibits republishing.
+
+When this tag is **absent**, republishing is **implicitly allowed** by default. Using HDOC or CDOC formats is understood as consent to the republishing mechanism that keeps visible connections stable.
 
 ---
 
@@ -152,11 +179,13 @@ Clients must extract the HTML block from `<content>` using a **regular expressio
 # 7. Panels
 
 The `<panels>` section defines standardized UI panels that appear in all clients.
-It may contain three types of panels: `<top>`, `<side>`, and `<bottom>`.
+It may contain five types of panels: `<top>`, `<post-nav>`, `<sidebar>`, `<side>`, and `<bottom>`.
 
 ```xml
 <panels>
     <top>…</top>
+    <post-nav>…</post-nav>
+    <sidebar>…</sidebar>
     <side>…</side>
     <bottom>…</bottom>
 </panels>
@@ -201,36 +230,59 @@ Multiple allowed.
 
 ---
 
-## 7.2 `<side>` Panel
+## 7.2 `<post-nav>` Panel
 
-Contains comments or an interactive page.
+Previous/next post navigation.
 
 ```xml
-<side side="left"> … </side>
+<post-nav>
+    <prev href="https://example.com/older-post/">Older Post Title</prev>
+    <next href="https://example.com/newer-post/">Newer Post Title</next>
+</post-nav>
 ```
 
-Attributes:
+Child elements:
 
-* `side="left"` or `"right"` (default: `"right"`)
+* `<prev href="…">` — link to the previous (older) post. Text content is the post title. Omit if no previous post exists.
+* `<next href="…">` — link to the next (newer) post. Text content is the post title. Omit if no next post exists.
+
+---
+
+## 7.3 `<side>` Panel
+
+Contains comments or an interactive page. This panel is shown on demand (opened via a button); its exact placement is determined by the client based on the document's language and its own UX conventions.
+
+```xml
+<side> … </side>
+```
 
 ### Child elements:
 
-#### 7.2.1 `<comments>`
+#### 7.3.1 `<comments>`
 
 ```xml
-<comments title="Comments" empty="No comments yet">https://…/comments.json</comments>
+<comments
+    title="Comments"
+    empty="No comments yet"
+    leave-comment-url="https://example.com/sw-comment-form/?post=19"
+    reply-label="Reply"
+    leave-comment-label="Leave a comment"
+>https://…/comments.json</comments>
 ```
 
 Attributes:
 
 * `title` (optional)
-* `empty` (optional)
+* `empty` (optional) — message shown when there are no comments
+* `leave-comment-url` (optional) — URL of the comment submission form for posting a top-level comment on this document. When absent, all posting UI ("Leave a comment" button and all "Reply" buttons) is hidden and the section is read-only. Existing comments are still displayed regardless.
+* `reply-label` (optional) — label for the per-comment Reply button (e.g. `"Reply"`). Used only when `leave-comment-url` is present.
+* `leave-comment-label` (optional) — label for the section-level Leave a comment button (e.g. `"Leave a comment"`). Used only when `leave-comment-url` is present.
 
 Content:
 
-* URL of a static-comments JSON array
+* URL of a static-comments JSON array (see Static Comments Specification)
 
-#### 7.2.2 `<ipage>`
+#### 7.3.2 `<ipage>`
 
 URL of an interactive HTML page displayed in the side panel.
 
@@ -240,7 +292,7 @@ URL of an interactive HTML page displayed in the side panel.
 
 ---
 
-## 7.3 `<bottom>` Panel
+## 7.4 `<bottom>` Panel
 
 ```xml
 <bottom>
@@ -253,7 +305,7 @@ URL of an interactive HTML page displayed in the side panel.
 
 Child elements:
 
-### 7.3.1 `<section>`
+### 7.4.1 `<section>`
 
 Attributes:
 
@@ -261,9 +313,97 @@ Attributes:
 
 Contains multiple `<a>` elements.
 
-### 7.3.2 `<bottom-message>`
+### 7.4.2 `<bottom-message>`
 
 Contains plain text.
+
+---
+
+## 7.5 `<sidebar>` Panel
+
+A persistent visible column displayed alongside the document content. Unlike `<side>` (which is opened on demand via a button), the sidebar is visible on page load.
+
+```xml
+<sidebar side="right">
+    <search action="https://example.com/?s=%s" placeholder="Search…" target="_self"/>
+    <links title="Popular Posts">
+        <a href="https://example.com/post-slug/">Post Title</a>
+        <a href="https://example.com/another-post/" target="_blank" rel="noopener">Another Post</a>
+    </links>
+    <recent-comments title="Recent Comments" format="{author} on {post}">
+    <comment post-href="https://example.com/post-slug/" post-title="Post Title" author="Jane" excerpt="Comment excerpt…"/>
+</recent-comments>
+</sidebar>
+```
+
+**Attributes:**
+
+* `side` (optional) — `"left"` or `"right"` (default: `"right"`). Preferred placement when space allows.
+
+**Display behavior:**
+
+* When sufficient horizontal space is available (full-width view), the sidebar is rendered as a column on the preferred side of the main content.
+* When space is insufficient (narrow view, split-screen mode) or when the `<side>` panel is open, the sidebar content flows to the bottom, below the main content and above the `<bottom>` panel.
+* All child sections are optional.
+
+### 7.5.1 `<search>`
+
+Renders a search input.
+
+```xml
+<search action="https://example.com/?s=%s" placeholder="Search…" target="_self"/>
+```
+
+Attributes:
+
+* `action` (required) — URL template. The client replaces `%s` with the URL-encoded search term before navigating.
+* `placeholder` (optional) — hint text shown inside the input field.
+* `target` (optional) — where to open the search results page. Accepts `"_self"` (default, same tab) or `"_blank"` (new tab).
+
+### 7.5.2 `<links>`
+
+A titled list of arbitrary links. Multiple `<links>` blocks are allowed.
+
+```xml
+<links title="Popular Posts">
+    <a href="https://example.com/post-slug/">Post Title</a>
+    <a href="https://example.com/another-post/" target="_blank" rel="noopener">Another Post</a>
+</links>
+```
+
+Attributes on `<links>`:
+
+* `title` (optional) — section heading.
+
+Attributes on each `<a>`:
+
+* `href` (required) — destination URL.
+* `target` (optional) — where to open the link (`"_self"`, `"_blank"`, etc.).
+* `rel` (optional) — link relationship (e.g. `"noopener"`, `"nofollow"`).
+
+Text content of each `<a>` is the link label.
+
+### 7.5.3 `<recent-comments>`
+
+A list of recent comments across the site.
+
+```xml
+<recent-comments title="Recent Comments" format="{author} on {post}">
+    <comment post-href="https://example.com/post-slug/" post-title="Post Title" author="Jane" excerpt="Comment excerpt…"/>
+</recent-comments>
+```
+
+Attributes on `<recent-comments>`:
+
+* `title` (optional) — section heading.
+* `format` (optional) — template string for rendering each item. Default: `"{author} on {post}"`. Placeholders: `{author}` (commenter name) and `{post}` (post title, linked to `post-href`). Reorder freely to suit any language: e.g. `"{post} · {author}"` or `"{post}に{author}がコメント"`.
+
+Attributes on each `<comment>`:
+
+* `post-href` (required) — URL of the post the comment belongs to.
+* `post-title` (required) — title of the post.
+* `author` (required) — display name of the commenter.
+* `excerpt` (optional) — short excerpt of the comment text.
 
 ---
 
@@ -273,36 +413,53 @@ Contains plain text.
 In that case, this section becomes **required**.
 
 ```xml
-<copy-info>
-    <source copied-at="2025-01-01T12:00:00Z">https://example.com/original</source>
+<!-- direct copy of the original -->
+<copy-info original="https://example.com/original" copied-at="2025-01-01T12:00:00Z">
+    <media-mappings>…</media-mappings>
+</copy-info>
+
+<!-- copy of a copy -->
+<copy-info original="https://example.com/original" copied-at="2025-01-01T12:00:00Z">
+    <via copied-at="2025-06-01T09:00:00Z">https://mirror.com/copy1</via>
     <media-mappings>…</media-mappings>
 </copy-info>
 ```
 
+Attributes of `<copy-info>`:
+
+* `original` (required): URL of the true original document
+* `copied-at` (required): ISO-8601 timestamp of when the **first copy** in the chain was made — the oldest date in the log
+
 ---
 
-## 8.1 `<source>` (one or more)
+## 8.1 `<via>` (optional, repeatable)
+
+Each `<via>` entry records an intermediate copy in the chain, in ascending chronological order. The last `<via>` is the copy the current document was directly copied from.
 
 Attributes:
 
-* `copied-at` (required): ISO-8601 timestamp
+* `copied-at` (required): ISO-8601 timestamp of when that copy was made
 
-If copying a copy, include multiple `<source>` entries to preserve the history.
+Content: the URL of that intermediate copy.
+
+**How to extend the chain when copying a copy:** take the existing `<copy-info>` as-is, then append a new `<via copied-at="today">` with the URL you copied from and today's date. Never modify the existing `copied-at` attribute on `<copy-info>`.
 
 ---
 
 ## 8.2 `<media-mappings>` (optional)
 
-Contains remapping rules for resource URLs.
+Contains URL rewriting rules for media resources (images, audio, video, etc.) embedded in the content. Use this when the copy hosts media files locally instead of loading them from the original server.
+
+Each `<mapping>` rule is applied as a **prefix replacement**: any resource URL that starts with `from` has that prefix replaced with `to`. A full URL in `from` acts as an exact match.
 
 ```xml
 <media-mappings>
-    <m>
-        <old>https://example.com/img.jpg</old>
-        <new>https://copy.com/img.jpg</new>
-    </m>
+    <mapping from="https://example.com/media/" to="https://copy.com/media/" />
+    <mapping from="https://cdn.example.com/img.jpg" to="https://copy.com/img.jpg" />
 </media-mappings>
 ```
+
+Rules are applied in order; the first match wins.
 
 ---
 
@@ -359,8 +516,6 @@ Future versions of HDOC may add:
 * Additional metadata fields
 * More structured header fields
 * Standardized themes and CSS class lists
-* More panel types
 * More copy-tracking capabilities
 
 Everything in this document is subject to change during the draft phase.
-

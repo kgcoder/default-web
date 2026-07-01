@@ -103,7 +103,7 @@ Files should indicate their maturity level at the top.
 - **Code:** MIT (see `LICENSE-CODE.md`)  
 - **Specification documents:** CC BY-ND 4.0 (see `LICENSE-SPECS.md`)  
 
-Specification documents include all document format specifications (HDOC, Embedded HDOC, CDOC, CONDOC) as well as related specifications such as Parsing Rules, Connections, and Static Comments.  
+Specification documents include all document format specifications (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC) as well as related specifications such as Parsing Rules, Connections, and Static Comments.  
 These documents define the structure, rules, and standards of the Default Web project and are licensed under CC BY-ND 4.0 to prevent derivative modifications.
 
 ---

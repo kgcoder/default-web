@@ -10,14 +10,14 @@ This project is inspired by Ted Nelson’s vision of hypertext, ideas that the m
 
 The Default Web aims to finally introduce true hypertext into the Web ecosystem.
 
-It defines a set of static document types (HDOC, Embedded HDOC, CDOC, CONDOC, etc.) that:
+It defines a set of static document types (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC, etc.) that:
 
 - don’t support scripts,
 - render the same everywhere,
 - enable visible connections,
 - are self-contained and have no dependencies beyond images and iframes.
 
-These documents form a parallel ecosystem — living alongside today’s HTML pages, and in the case of Embedded HDOCs, even inside them. Most web pages (blog posts, docs, articles) don’t need custom design or complex interactivity; a stable default format works better. Over time, standalone HDOCs can replace a large portion of the Web.
+These documents form a parallel ecosystem — living alongside today’s HTML pages, and in the case of Embedded HDOCs, CDOCs and CONDOCs, even inside them. Most web pages (blog posts, docs, articles) don’t need custom design or complex interactivity; a stable default format works better. Over time, standalone HDOCs can replace a large portion of the Web.
 
 HTML with CSS and JavaScript remains the right tool for special cases:
 - landing pages with heavy design or animation,
@@ -52,8 +52,14 @@ Allows websites to participate in the Default Web without having to serve a stan
 ### **CDOC** — Collage Document  
 A document format for 2D collages. It is based on SVG format and can contain visible connections to any number of other documents.
 
+### **Embedded CDOC**  
+A version of CDOC embedded inside existing HTML pages. Useful when website provides Reader UI. Embedded CDOC allows you to still use a browser extension in this case and even connect to the CDOC from another document.
+
 ### **CONDOC** — Connections Document  
 A container type that can reference the main document (HDOC, CDOC, or a regular web page with parsing rules), and use visible connections to connect it to any number of other documents.
+
+### **Embedded CONDOC**
+A version of CDOC embedded inside existing HTML pages. Allows you to view the CONDOC in a browser extension.
 
 ### ***Static comments*** - A JSON array used in the Comments section of an HDOC 
 HDOCs can include comments stored as a JSON array (inspired by the WordPress comments format, but with small modifications like visible connections to the host page and multiple ID types).
@@ -122,7 +128,7 @@ This repository contains two categories of content with separate licenses:
    Licensed under a permissive open-source license (MIT).  
    See `LICENSE-CODE.md`.
 
-2. **Specification documents (HDOC, Embedded HDOC, CDOC, CONDOC, Parsing Rules, Connections, Static Comments, etc.)**  
+2. **Specification documents (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC, Parsing Rules, Connections, Static Comments, etc.)**  
    Licensed under **Creative Commons Attribution-NoDerivatives 4.0 (CC BY-ND 4.0)**.  
    These specifications define document formats and related standards for the Default Web project and are **not to be modified**. 
    See `LICENSE-SPECS.md`.
@@ -144,7 +150,7 @@ They are not required for implementing or using the specifications.
 
 - [Visible Connections](https://chromewebstore.google.com/detail/visible-connections/hlckcdbgknflkkciojgdbhomdnegimbm) (Chrome extension) — adds support for new data formats and visible-connection rendering inside the browser.
 
-- [Static Web Publisher](https://wordpress.org/plugins/static-web-publisher/) (WordPress plugin) — automatically embeds an Embedded HDOC version of each page.
+- [Static Web Publisher](https://wordpress.org/plugins/static-web-publisher/) (WordPress plugin) — automatically embeds an Embedded HDOC versions on pages and posts. Can serve Default Web documents in a special Reader UI. Supports CDOCs and CONDOCs. 
 
 - [LZ Desktop](https://reinventingtheweb.com/lzdesktop/) (desktop viewer/editor) — standalone app for browsing Default Web content and creating new documents with visible connections.
 
