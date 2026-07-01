@@ -89,12 +89,15 @@ For full details, syntax, and examples, see: `specs/parsing-rules.md`.
    README.md
    GOVERNANCE.md
    /specs
-      hdoc.md
-      embedded-hdoc.md
       cdoc.md
       condoc.md
-      static-comments.md
+      connections.md
+      embedded-cdoc.md
+      embedded-condoc.md
+      embedded-hdoc.md
+      hdoc.md
       parsing-rules.md
+      static-comments.md
       ...
    /drafts
       design-notes.md
