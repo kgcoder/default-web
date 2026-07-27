@@ -1,12 +1,12 @@
-# Default Web Governance Model
+# Reader's Web Governance Model
 
-This document defines how the Default Web project is guided, how decisions are made, and how stewardship of the specifications works — both now and in the future.
+This document defines how the Reader's Web project is guided, how decisions are made, and how stewardship of the specifications works — both now and in the future.
 
 ---
 
 ## 1. Purpose
 
-The purpose of governance is to ensure that the Default Web specifications:
+The purpose of governance is to ensure that the Reader's Web specifications:
 - maintain long-term stability,
 - evolve according to community needs,
 - remain open, transparent, and forkable,
@@ -55,7 +55,7 @@ Over time, authority may shift:
 
 ## 4. Long-Term Ownership and Continuity
 
-The Default Web specifications should outlive any individual contributor.
+The Reader's Web specifications should outlive any individual contributor.
 
 ### **Current Policy**
 Until formal governance is established:
@@ -104,7 +104,7 @@ Files should indicate their maturity level at the top.
 - **Specification documents:** CC BY-ND 4.0 (see `LICENSE-SPECS.md`)  
 
 Specification documents include all document format specifications (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC) as well as related specifications such as Parsing Rules, Connections, and Static Comments.  
-These documents define the structure, rules, and standards of the Default Web project and are licensed under CC BY-ND 4.0 to prevent derivative modifications.
+These documents define the structure, rules, and standards of the Reader's Web project and are licensed under CC BY-ND 4.0 to prevent derivative modifications.
 
 ---
 

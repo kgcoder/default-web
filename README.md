@@ -1,6 +1,6 @@
-# Default Web Specifications
+# Reader's Web Specifications
 
-This repository contains early drafts, proposals, and evolving specifications for the Default Web — an alternative, document-centric branch of the Web built around stable static data types and visible connections between documents.
+This repository contains early drafts, proposals, and evolving specifications for the Reader's Web — a new part of the Web where the reader, rather than the publisher, decides what a web page looks like. It is built around stable static data types and visible connections between documents.
 
 ---
 
@@ -8,7 +8,7 @@ This repository contains early drafts, proposals, and evolving specifications fo
 
 This project is inspired by Ted Nelson’s vision of hypertext, ideas that the modern Web never implemented. Early design choices in the 1990s mixed content, presentation, and behavior (HTML + CSS + JavaScript), turning pages into isolated containers and making something as basic as visible connections between documents practically impossible.
 
-The Default Web aims to finally introduce true hypertext into the Web ecosystem.
+The Reader's Web aims to finally introduce true hypertext into the Web ecosystem.
 
 It defines a set of static document types (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC, etc.) that:
 
@@ -23,21 +23,15 @@ HTML with CSS and JavaScript remains the right tool for special cases:
 - landing pages with heavy design or animation,
 - complex applications like social networks, marketplaces, or stores.
 
-But for simple content pages, there should be a default data format. That’s where the name “Default Web” comes from. Over time I used other names too:
-- Static Web — because the formats are static,
-- Web 1.1 — a continuation of the old static Web,
-- Standard Web — because documents look the same across sites,
-- Readers’ Web — because readers, not authors, control appearance through themes and clients.
+But for simple content pages, there should be a default data format. 
 
-All these names describe different angles of the same idea.
-
-We start with visible connections. As the ecosystem matures, we’ll explore more of Ted Nelson’s concepts: transclusions, richer link types, links with multiple ends, bidirectional links, versioning, micropayments, and more complex relationship graphs (beyond simple one-to-many connections between documents).
+Currently, Reader's Web document formats support visible connections between pages. As the ecosystem matures, we’ll explore more of Ted Nelson’s concepts: transclusions, richer link types, links with multiple ends, bidirectional links, versioning, micropayments, and more complex relationship graphs (beyond simple one-to-many connections between documents).
 
 Some of these ideas require centralized services. This project’s job is to demonstrate technical feasibility, define the data formats, and build the frontend layer so that when those services appear, they can plug directly into an existing ecosystem.
 
 ---
 
-## Default Web Document Types
+## Reader's Web Document Types
 
 The following formats are under development:
 
@@ -47,7 +41,7 @@ Can contain HTML or plain text conent and visible connections to other web pages
 
 ### **Embedded HDOC**  
 A version of HDOC embedded inside existing HTML pages.  
-Allows websites to participate in the Default Web without having to serve a standalone HDOC from an endpoint different from the URL of the original original HTML page.
+Allows websites to participate in the Reader's Web without having to serve a standalone HDOC from an endpoint different from the URL of the original original HTML page.
 
 ### **CDOC** — Collage Document  
 A document format for 2D collages. It is based on SVG format and can contain visible connections to any number of other documents.
@@ -133,7 +127,7 @@ This repository contains two categories of content with separate licenses:
 
 2. **Specification documents (HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC, Parsing Rules, Connections, Static Comments, etc.)**  
    Licensed under **Creative Commons Attribution-NoDerivatives 4.0 (CC BY-ND 4.0)**.  
-   These specifications define document formats and related standards for the Default Web project and are **not to be modified**. 
+   These specifications define document formats and related standards for the Reader's Web project and are **not to be modified**. 
    See `LICENSE-SPECS.md`.
 
 Unless otherwise noted, each file clearly indicates which license applies.
@@ -142,20 +136,20 @@ Unless otherwise noted, each file clearly indicates which license applies.
 
 ## Status
 
-The Default Web specifications are **early drafts**.  
+The Reader's Web specifications are **early drafts**.  
 Expect rapid changes as the formats evolve and the ecosystem grows.
 
 
 ## Reference Implementations
 
-The following software projects demonstrate early support for Default Web formats.
+The following software projects demonstrate early support for Reader's Web formats.
 They are not required for implementing or using the specifications.
 
 - [Visible Connections](https://chromewebstore.google.com/detail/visible-connections/hlckcdbgknflkkciojgdbhomdnegimbm) (Chrome extension) — adds support for new data formats and visible-connection rendering inside the browser.
 
-- [Static Web Publisher](https://wordpress.org/plugins/static-web-publisher/) (WordPress plugin) — automatically embeds an Embedded HDOC versions on pages and posts. Can serve Default Web documents in a special Reader UI. Supports CDOCs and CONDOCs. 
+- [Static Web Publisher](https://wordpress.org/plugins/static-web-publisher/) (WordPress plugin) — automatically embeds an Embedded HDOC versions on pages and posts. Can serve Reader's Web documents in a special Reader UI. Supports CDOCs and CONDOCs. 
 
-- [LZ Desktop](https://reinventingtheweb.com/lzdesktop/) (desktop viewer/editor) — standalone app for browsing Default Web content and creating new documents with visible connections.
+- [LZ Desktop](https://reinventingtheweb.com/lzdesktop/) (desktop viewer/editor) — standalone app for browsing Reader's Web content and creating new documents with visible connections.
 
 More tools will be added as the ecosystem evolves.
 
@@ -163,6 +157,6 @@ More tools will be added as the ecosystem evolves.
 
 ## Official Website
 
-More information about the Default Web project, ecosystem updates, and guides can be found at:
+More information about the Reader's Web project, ecosystem updates, and guides can be found at:
 
 **https://reinventingtheweb.com/**

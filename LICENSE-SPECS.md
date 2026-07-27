@@ -2,7 +2,7 @@
 
 The document format specifications in this repository—including HDOC, Embedded HDOC, CDOC, Embedded CDOC, CONDOC, Embedded CONDOC, and related specifications such as Parsing Rules, Connections, and Static Comments — are licensed under the **Creative Commons Attribution-NoDerivatives 4.0 International License (CC BY-ND 4.0).**
 
-This license applies to all document types defined and published by the Default Web project, including current and future types. New document types may be added to the official specification over time.
+This license applies to all document types defined and published by the Reader's Web project, including current and future types. New document types may be added to the official specification over time.
 
 You are free to:
 
@@ -14,6 +14,6 @@ You may **not**:
 - Publish modified versions of the specifications
 - Claim modified specifications as canonical
 
-Attribution must be given to the Default Web project and the original author.
+Attribution must be given to the Reader's Web project and the original author.
 
 Full license text: [https://creativecommons.org/licenses/by-nd/4.0/](https://creativecommons.org/licenses/by-nd/4.0/)
