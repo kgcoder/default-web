@@ -163,7 +163,7 @@ Example:
 
   <connections>
     <doc
-        url="https://reinventingtheweb.com/examples/famous-men/table-of-contents.hdoc"
+        url="https://readersweb.org/examples/famous-men/table-of-contents.hdoc"
         title="Table of contents of the Project Gutenberg eBook &quot;Famous Men of the Middle Ages&quot;"
         hash="1f25bd">
 

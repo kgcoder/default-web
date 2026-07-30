@@ -145,11 +145,11 @@ Expect rapid changes as the formats evolve and the ecosystem grows.
 The following software projects demonstrate early support for Reader's Web formats.
 They are not required for implementing or using the specifications.
 
-- [Visible Connections](https://chromewebstore.google.com/detail/visible-connections/hlckcdbgknflkkciojgdbhomdnegimbm) (Chrome extension) — adds support for new data formats and visible-connection rendering inside the browser.
+- [RW Reader](https://chromewebstore.google.com/detail/rw-reader/hlckcdbgknflkkciojgdbhomdnegimbm) (Chrome extension) — adds support for new data formats and visible-connection rendering inside the browser.
 
 - [Static Web Publisher](https://wordpress.org/plugins/static-web-publisher/) (WordPress plugin) — automatically embeds an Embedded HDOC versions on pages and posts. Can serve Reader's Web documents in a special Reader UI. Supports CDOCs and CONDOCs. 
 
-- [LZ Desktop](https://reinventingtheweb.com/lzdesktop/) (desktop viewer/editor) — standalone app for browsing Reader's Web content and creating new documents with visible connections.
+- [LZ Desktop](https://readersweb.org/lzdesktop/) (desktop viewer/editor) — standalone app for browsing Reader's Web content and creating new documents with visible connections.
 
 More tools will be added as the ecosystem evolves.
 
@@ -159,4 +159,4 @@ More tools will be added as the ecosystem evolves.
 
 More information about the Reader's Web project, ecosystem updates, and guides can be found at:
 
-**https://reinventingtheweb.com/**
+**https://readersweb.org/**
