@@ -76,21 +76,13 @@ https://example.com/some-page#pr=c/body
 
 ## 5. Creating Parsing Rules
 
-### 5.1 Automatic Parsing (LZ Desktop)
-
-* Uses a predefined list of selectors to extract content.
-* Works ~50% of the time; fallback needed for manual rules if parsing fails.
-* Ensures **deterministic extraction** for publishing visible connections.
-
-### 5.2 Manual Parsing
-
 1. Open the page in a browser (e.g., Chrome).
 2. Inspect elements with Developer Tools.
 3. Identify the main content container.
 4. Select appropriate CSS selectors for content, title, date, author, and removal list.
 5. Encode selectors and append to the URL as `#pr=...`.
 
-* The **Visible Connections browser extension** can assist with encoding and testing.
+* The **RW Reader browser extension** can assist with finding parsing rules and testing them.
 
 ---
 
@@ -99,7 +91,7 @@ https://example.com/some-page#pr=c/body
 * All clients must parse a given URL **identically**.
 * Differences in parsing may break floating links and prevent fixes.
 * Parsing rules guarantee consistency, even for complex or heavily styled pages.
-* Once configured, parsing rules can usually be reused across all pages of the same site.
+* Once configured, parsing rules can usually be reused across all content pages (posts) of the same site.
 
 ---
 
